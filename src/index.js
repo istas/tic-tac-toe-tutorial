@@ -83,6 +83,12 @@ class Game extends React.Component {
     });
   }
 
+  movesLeft() {
+    const current_squares = this.state.history[this.state.stepNumber].squares;
+    // The filter here gets rid of null elements
+    return 9 - current_squares.filter(el => el).length;
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -102,6 +108,8 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = "Winner: " + winner;
+    } else if (this.movesLeft() === 0) {
+      status = "No one wins; Womp Womp";
     } else {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
